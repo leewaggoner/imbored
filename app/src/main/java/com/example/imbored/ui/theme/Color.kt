@@ -3,10 +3,13 @@ package com.example.imbored.ui.theme
 import androidx.compose.ui.graphics.Color
 
 val LightYellow = Color(0xFFFFDD00)
-val DarkYellow = Color(0xFFD0BD3F)
+val DarkYellow = Color(0xFFBEA629)
 val Grey = Color(0xFF797979)
 val LightPurple = Color(0xFF7F3995)
 val DarkPurple = Color(0xFF5A296A)
+
+val Black = Color(0xFF000000)
+val White = Color(0xFFFFFFFF)
 
 val Purple80 = Color(0xFFD0BCFF)
 val PurpleGrey80 = Color(0xFFCCC2DC)
