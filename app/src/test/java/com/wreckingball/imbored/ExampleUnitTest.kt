@@ -1,4 +1,4 @@
-package com.example.imbored
+package com.wreckingball.imbored
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

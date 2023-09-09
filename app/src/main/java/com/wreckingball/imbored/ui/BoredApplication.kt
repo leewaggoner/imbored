@@ -1,7 +1,7 @@
-package com.example.imbored.ui
+package com.wreckingball.imbored.ui
 
 import android.app.Application
-import com.example.imbored.di.appModule
+import com.wreckingball.imbored.di.appModule
 import org.koin.core.context.startKoin
 
 class BoredApplication : Application() {

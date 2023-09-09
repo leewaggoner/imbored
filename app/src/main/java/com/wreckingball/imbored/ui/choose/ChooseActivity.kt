@@ -1,4 +1,4 @@
-package com.example.imbored.ui.choose
+package com.wreckingball.imbored.ui.choose
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,11 +21,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.imbored.R
-import com.example.imbored.ui.Actions
-import com.example.imbored.ui.choose.models.ChooseActivityState
-import com.example.imbored.ui.compose.ActivityParametersDropdown
-import com.example.imbored.ui.theme.White
+import com.wreckingball.imbored.R
+import com.wreckingball.imbored.ui.Actions
+import com.wreckingball.imbored.ui.choose.models.ChooseActivityState
+import com.wreckingball.imbored.ui.compose.ActivityParametersDropdown
+import com.wreckingball.imbored.ui.theme.White
 import org.koin.androidx.compose.get
 
 @Composable

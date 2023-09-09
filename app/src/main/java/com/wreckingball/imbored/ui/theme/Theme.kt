@@ -1,4 +1,4 @@
-package com.example.imbored.ui.theme
+package com.wreckingball.imbored.ui.theme
 
 import android.app.Activity
 import android.os.Build

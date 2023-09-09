@@ -1,12 +1,12 @@
-package com.example.imbored.ui
+package com.wreckingball.imbored.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.imbored.ui.activity.DisplayActivity
-import com.example.imbored.ui.choose.ChooseActivity
+import com.wreckingball.imbored.ui.activity.DisplayActivity
+import com.wreckingball.imbored.ui.choose.ChooseActivity
 
 @Composable
 fun BoredHost() {

@@ -1,4 +1,4 @@
-package com.example.imbored.ui.theme
+package com.wreckingball.imbored.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

@@ -1,4 +1,4 @@
-package com.example.imbored.ui.activity
+package com.wreckingball.imbored.ui.activity
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -6,7 +6,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.imbored.ui.Actions
+import com.wreckingball.imbored.ui.Actions
 
 @Composable
 fun DisplayActivity(actions: Actions) {

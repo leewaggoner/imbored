@@ -1,8 +1,7 @@
-package com.example.imbored.di
+package com.wreckingball.imbored.di
 
-import com.example.imbored.BuildConfig
-import com.example.imbored.network.PexelImageService
-import com.example.imbored.ui.choose.ChooseActivityViewModel
+import com.wreckingball.imbored.network.PexelImageService
+import com.wreckingball.imbored.ui.choose.ChooseActivityViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -21,7 +20,7 @@ val appModule = module {
     single<PexelImageService> {
         createService(
             retrofit = retrofitService(
-                url = BuildConfig.PEXEL_IMAGE_URL,
+                url = "Hi",//BuildConfig.PEXEL_IMAGE_URL,
                 okHttpClient = okHttp(),
                 converterFactory = GsonConverterFactory.create()
             )

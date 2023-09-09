@@ -1,4 +1,4 @@
-package com.example.imbored.ui
+package com.wreckingball.imbored.ui
 
 import androidx.navigation.NavController
 

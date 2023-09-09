@@ -1,11 +1,11 @@
-package com.example.imbored
+package com.wreckingball.imbored
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.example.imbored.ui.BoredHost
-import com.example.imbored.ui.theme.ImBoredTheme
+import com.wreckingball.imbored.ui.BoredHost
+import com.wreckingball.imbored.ui.theme.ImBoredTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

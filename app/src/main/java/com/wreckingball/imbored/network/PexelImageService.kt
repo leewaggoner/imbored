@@ -1,4 +1,4 @@
-package com.example.imbored.network
+package com.wreckingball.imbored.network
 
 import retrofit2.http.GET
 import retrofit2.http.Path

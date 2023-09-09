@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.imbored"
+    namespace = "com.wreckingball.imbored"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.imbored"
+        applicationId = "com.wreckingball.imbored"
         minSdk = 26
         targetSdk = 34
         versionCode = 1

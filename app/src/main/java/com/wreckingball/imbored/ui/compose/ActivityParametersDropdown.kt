@@ -1,4 +1,4 @@
-package com.example.imbored.ui.compose
+package com.wreckingball.imbored.ui.compose
 
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.DropdownMenuItem

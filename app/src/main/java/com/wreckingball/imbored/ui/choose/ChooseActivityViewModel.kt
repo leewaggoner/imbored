@@ -1,11 +1,11 @@
-package com.example.imbored.ui.choose
+package com.wreckingball.imbored.ui.choose
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.example.imbored.R
-import com.example.imbored.ui.choose.models.ChooseActivityState
+import com.wreckingball.imbored.R
+import com.wreckingball.imbored.ui.choose.models.ChooseActivityState
 
 class ChooseActivityViewModel : ViewModel() {
     val tabs = listOf(
