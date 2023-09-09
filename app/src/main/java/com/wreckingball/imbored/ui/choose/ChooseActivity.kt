@@ -18,6 +18,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -33,9 +34,9 @@ fun ChooseActivity(
     actions: Actions,
     viewModel: ChooseActivityViewModel = get(),
     ) {
-    val tabs = viewModel.tabs.map { stringResource(id = it) }
-    val participants = viewModel.participants.map { stringResource(id = it) }
-    val costs = viewModel.costs.map { stringResource(id = it) }
+    val tabs = stringArrayResource(id = R.array.tabs).toList()
+    val participants = stringArrayResource(id = R.array.participants).toList()
+    val costs = stringArrayResource(id = R.array.costs).toList()
 
     ChooseActivityContent(
         state = viewModel.state,

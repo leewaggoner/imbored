@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="tabs">
+        <item>Busywork</item>
+        <item>Charity</item>
+        <item>Cooking</item>
+        <item>DIY</item>
+        <item>Education</item>
+        <item>Music</item>
+        <item>Recreational</item>
+        <item>Relaxation</item>
+        <item>Social</item>
+    </string-array>
+    <string-array name="participants">
+        <item>Any</item>
+        <item>One</item>
+        <item>Two</item>
+        <item>Three</item>
+        <item>Four</item>
+        <item>More</item>
+    </string-array>
+    <string-array name="costs">
+        <item>Any</item>
+        <item>Free</item>
+        <item>Cheap</item>
+        <item>Moderate</item>
+        <item>Expensive</item>
+    </string-array>
+</resources>
