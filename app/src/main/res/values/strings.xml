@@ -9,4 +9,17 @@
     <string name="recreational">Recreational</string>
     <string name="relaxation">Relaxation</string>
     <string name="social">Social</string>
+    <string name="one">One</string>
+    <string name="two">Two</string>
+    <string name="three">Three</string>
+    <string name="four">Four</string>
+    <string name="more">More</string>
+    <string name="participants">Participants</string>
+    <string name="expand_list">Expand List</string>
+    <string name="cost">Cost</string>
+    <string name="free">Free</string>
+    <string name="cheap">Cheap</string>
+    <string name="moderate">Moderate</string>
+    <string name="expensive">Expensive</string>
+    <string name="any">Any</string>
 </resources>
