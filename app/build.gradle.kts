@@ -1,9 +1,11 @@
-import com.android.build.api.variant.BuildConfigField
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
 }
+
+val pexelApiKey: String = gradleLocalProperties(rootDir).getProperty("PEXEL_API_KEY")
 
 android {
     namespace = "com.wreckingball.imbored"
@@ -23,7 +25,14 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField(name = "PEXEL_AUTH_KEY", type = "String", value = "\"$pexelApiKey\"")
+            buildConfigField(name = "PEXEL_IMAGE_URL", type = "String", value = "\"https://api.pexels.com/\"")
+        }
         release {
+            buildConfigField(name = "PEXEL_AUTH_KEY", type = "String", value = "\"$pexelApiKey\"")
+            buildConfigField(name = "PEXEL_IMAGE_URL", type = "String", value = "\"https://api.pexels.com/\"")
+
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -52,19 +61,6 @@ android {
     }
 }
 
-androidComponents {
-    onVariants {
-        it.buildConfigFields.put(
-            "PEXEL_IMAGE_URL",
-            BuildConfigField(
-                "String",
-                "\"https://api.pexels.com/\"",
-                "Pexel URL"
-                )
-        )
-    }
-}
-
 dependencies {
 
     implementation("androidx.core:core-ktx:1.10.1")
@@ -83,6 +79,7 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.2.1")
+    implementation("io.coil-kt:coil-compose:1.3.2")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

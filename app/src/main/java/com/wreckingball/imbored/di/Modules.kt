@@ -1,7 +1,11 @@
 package com.wreckingball.imbored.di
 
+import com.wreckingball.imbored.BuildConfig
+import com.wreckingball.imbored.network.PexelAuthInterceptor
 import com.wreckingball.imbored.network.PexelImageService
+import com.wreckingball.imbored.repos.PexelImages
 import com.wreckingball.imbored.ui.choose.ChooseActivityViewModel
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -15,13 +19,23 @@ private const val READ_TIMEOUT = 30L
 private const val WRITE_TIMEOUT = 30L
 
 val appModule = module {
-    viewModel { ChooseActivityViewModel() }
+    viewModel {
+        ChooseActivityViewModel(
+            pexelImages = get()
+        )
+    }
 
-    single<PexelImageService> {
+    single {
+        PexelImages(
+            pexelImageService = get()
+        )
+    }
+
+    factory<PexelImageService> {
         createService(
             retrofit = retrofitService(
-                url = "Hi",//BuildConfig.PEXEL_IMAGE_URL,
-                okHttpClient = okHttp(),
+                url = BuildConfig.PEXEL_IMAGE_URL,
+                okHttpClient = okHttp(PexelAuthInterceptor()),
                 converterFactory = GsonConverterFactory.create()
             )
         )
@@ -40,7 +54,7 @@ private fun retrofitService(
     addConverterFactory(converterFactory)
 }.build()
 
-private fun okHttp() = OkHttpClient.Builder().apply {
+private fun okHttp(authInterceptor: Interceptor? = null) = OkHttpClient.Builder().apply {
     val interceptor = HttpLoggingInterceptor()
     interceptor.level = HttpLoggingInterceptor.Level.BODY
     addInterceptor(interceptor)
@@ -48,4 +62,7 @@ private fun okHttp() = OkHttpClient.Builder().apply {
     readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
     connectTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
     retryOnConnectionFailure(true)
+    authInterceptor?.let {
+        addInterceptor(authInterceptor)
+    }
 }.build()

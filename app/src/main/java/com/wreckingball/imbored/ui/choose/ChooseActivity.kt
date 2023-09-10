@@ -1,5 +1,6 @@
 package com.wreckingball.imbored.ui.choose
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -7,21 +8,25 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.annotation.ExperimentalCoilApi
+import coil.compose.rememberImagePainter
 import com.wreckingball.imbored.R
 import com.wreckingball.imbored.ui.Actions
 import com.wreckingball.imbored.ui.choose.models.ChooseActivityState
@@ -39,6 +44,11 @@ fun ChooseActivity(
     val participants = stringArrayResource(id = R.array.participants).toList()
     val costs = stringArrayResource(id = R.array.costs).toList()
 
+    LaunchedEffect(Unit) {
+        //load initial image only once per session
+        viewModel.onTabClick(tabs[0])
+    }
+
     ChooseActivityContent(
         state = viewModel.state,
         tabs = tabs,
@@ -50,11 +60,12 @@ fun ChooseActivity(
     )
 }
 
+@OptIn(ExperimentalCoilApi::class)
 @Composable
 fun ChooseActivityContent(
     state: ChooseActivityState,
     tabs: List<String>,
-    onTabClick: (Int) -> Unit,
+    onTabClick: (String) -> Unit,
     participants: List<String>,
     onParticipantsSelected: (String) -> Unit,
     costs: List<String>,
@@ -78,7 +89,7 @@ fun ChooseActivityContent(
                     selected = selectedTabIndex == tabIndex,
                     onClick = {
                         selectedTabIndex = tabIndex
-                        onTabClick(tabIndex)
+                        onTabClick(tab)
                       },
                     text = { Text(text = tab) }
                 )
@@ -87,9 +98,10 @@ fun ChooseActivityContent(
 
         Column(
             modifier = Modifier
-                .padding(horizontal = MaterialTheme.dimensions.ChooseActivityMargin)
+                .padding(horizontal = MaterialTheme.dimensions.ChooseActivityMargin),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Spacer(modifier = Modifier.height(MaterialTheme.dimensions.ChooseActivitySpace))
+            Spacer(modifier = Modifier.height(MaterialTheme.dimensions.ChooseActivitySpacer))
 
             ActivityParameters(
                 state = state,
@@ -98,11 +110,17 @@ fun ChooseActivityContent(
                 costs = costs,
                 onCostSelected = onCostSelected,
             )
+            Spacer(modifier = Modifier.height(MaterialTheme.dimensions.ChooseActivitySmallSpacer))
+            val painter = rememberImagePainter(data = state.imageUrl)
+            Image(
+                painter = painter,
+                contentDescription = stringResource(id = R.string.image),
+                contentScale = ContentScale.Crop,
+            )
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ActivityParameters(
     state: ChooseActivityState,
@@ -114,7 +132,7 @@ private fun ActivityParameters(
     Row(
         modifier = Modifier
             .fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceEvenly
+        horizontalArrangement = Arrangement.SpaceEvenly,
     ) {
         ActivityParametersDropdown(
             label = stringResource(id = R.string.participants),
@@ -136,10 +154,7 @@ private fun ActivityParameters(
 @Preview
 fun ChooseActivityContentPreview() {
     ChooseActivityContent(
-        state = ChooseActivityState(
-            selectedParticipants = "",
-            selectedCost = ""
-        ),
+        state = ChooseActivityState(),
         participants = listOf("One", "Two", "Three"),
         tabs = listOf("tab1", "tab2", "tab3"),
         onTabClick = { },
