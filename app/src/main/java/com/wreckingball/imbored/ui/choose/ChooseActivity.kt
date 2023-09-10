@@ -27,6 +27,7 @@ import com.wreckingball.imbored.ui.Actions
 import com.wreckingball.imbored.ui.choose.models.ChooseActivityState
 import com.wreckingball.imbored.ui.compose.ActivityParametersDropdown
 import com.wreckingball.imbored.ui.theme.White
+import com.wreckingball.imbored.ui.theme.dimensions
 import org.koin.androidx.compose.get
 
 @Composable
@@ -86,9 +87,9 @@ fun ChooseActivityContent(
 
         Column(
             modifier = Modifier
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = MaterialTheme.dimensions.ChooseActivityMargin)
         ) {
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(MaterialTheme.dimensions.ChooseActivitySpace))
 
             ActivityParameters(
                 state = state,
