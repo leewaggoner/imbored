@@ -1,6 +1,7 @@
 package com.wreckingball.imbored.ui.compose
 
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
@@ -11,9 +12,9 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.unit.sp
 import com.wreckingball.imbored.R
 import com.wreckingball.imbored.domain.models.ChooseActivityImage
+import com.wreckingball.imbored.ui.theme.dimensions
 
 @Composable
 fun AttributionText(
@@ -29,7 +30,7 @@ fun AttributionText(
     ClickableText(
         modifier = Modifier.then(modifier),
         style = TextStyle(
-            fontSize = 8.sp,
+            fontSize = MaterialTheme.dimensions.AttributionTextSize,
         ),
         text = attributionText,
         onClick = { offset ->
