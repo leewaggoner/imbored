@@ -51,10 +51,10 @@ fun ChooseActivity(
     val costs = stringArrayResource(id = R.array.costs).toList()
 
     val navigation = viewModel.navigation.collectAsStateWithLifecycle(null)
-    navigation.value?.let { navigation ->
-        when (navigation) {
+    navigation.value?.let { nav ->
+        when (nav) {
             is ChooseActivityNavigation.DisplayActivity -> {
-                actions.navigateToDisplay()
+                actions.navigateToDisplay(nav.boredUrl)
             }
         }
     }

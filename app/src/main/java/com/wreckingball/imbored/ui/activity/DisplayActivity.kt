@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import com.wreckingball.imbored.ui.Actions
 
 @Composable
-fun DisplayActivity(actions: Actions) {
+fun DisplayActivity(actions: Actions, boredUrl: String) {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background

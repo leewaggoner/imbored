@@ -13,15 +13,21 @@ fun BoredHost() {
     val navController = rememberNavController()
     val actions = remember(navController) { Actions(navController) }
 
-    var startDestination = Destinations.ChooseActivity
+    val startDestination = Destinations.ChooseActivity
 
     NavHost(navController = navController, startDestination = startDestination) {
         composable(Destinations.ChooseActivity) {
             ChooseActivity(actions = actions)
         }
 
-        composable(Destinations.DisplayActivity) {
-            DisplayActivity(actions = actions)
+        composable(Destinations.DisplayActivity) { backStackEntry ->
+            val boredUrl = backStackEntry.arguments?.getString("boredUrl")
+            boredUrl?.let { url ->
+                DisplayActivity(
+                    actions = actions,
+                    boredUrl = url,
+                )
+            }
         }
     }
 }
