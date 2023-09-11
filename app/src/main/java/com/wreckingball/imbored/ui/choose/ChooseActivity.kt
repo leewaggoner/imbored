@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
@@ -25,10 +27,13 @@ import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.wreckingball.imbored.R
+import com.wreckingball.imbored.domain.models.ChooseActivityImage
 import com.wreckingball.imbored.ui.Actions
+import com.wreckingball.imbored.ui.choose.models.ChooseActivityNavigation
 import com.wreckingball.imbored.ui.choose.models.ChooseActivityState
 import com.wreckingball.imbored.ui.compose.ActivityParametersDropdown
 import com.wreckingball.imbored.ui.compose.AttributionText
@@ -45,6 +50,15 @@ fun ChooseActivity(
     val participants = stringArrayResource(id = R.array.participants).toList()
     val costs = stringArrayResource(id = R.array.costs).toList()
 
+    val navigation = viewModel.navigation.collectAsStateWithLifecycle(null)
+    navigation.value?.let { navigation ->
+        when (navigation) {
+            is ChooseActivityNavigation.DisplayActivity -> {
+                actions.navigateToDisplay()
+            }
+        }
+    }
+
     LaunchedEffect(Unit) {
         //load initial image only once per session
         viewModel.onTabClick(tabs[0])
@@ -58,6 +72,7 @@ fun ChooseActivity(
         onParticipantsSelected = viewModel::onParticipantsSelected,
         costs = costs,
         onCostSelected = viewModel::onCostSelected,
+        onDisplayActivity = viewModel::onDisplayActivity
     )
 }
 
@@ -71,6 +86,7 @@ fun ChooseActivityContent(
     onParticipantsSelected: (String) -> Unit,
     costs: List<String>,
     onCostSelected: (String) -> Unit,
+    onDisplayActivity: () -> Unit,
     ) {
     Column(
         modifier = Modifier
@@ -99,7 +115,8 @@ fun ChooseActivityContent(
 
         Column(
             modifier = Modifier
-                .padding(horizontal = MaterialTheme.dimensions.ChooseActivityMargin),
+                .padding(horizontal = MaterialTheme.dimensions.ChooseActivityMargin)
+                .weight(1.0f),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Spacer(modifier = Modifier.height(MaterialTheme.dimensions.ChooseActivitySpacer))
@@ -113,15 +130,23 @@ fun ChooseActivityContent(
             )
             Spacer(modifier = Modifier.height(MaterialTheme.dimensions.ChooseActivitySmallSpacer))
             state.imageData?.let { imageData ->
-                val painter = rememberImagePainter(data = imageData.url)
-                Image(
-                    painter = painter,
-                    contentDescription = stringResource(id = R.string.image),
-                    contentScale = ContentScale.Crop,
-                )
-                AttributionText(
-                    imageData = state.imageData,
-                )
+                ActivityImage(imageData = imageData)
+            }
+        }
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = MaterialTheme.dimensions.ChooseActivityMargin),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Button(
+                modifier = Modifier
+                    .width(160.dp),
+                onClick = {
+                    onDisplayActivity()
+                },
+            ) {
+                Text(text = stringResource(id = R.string.go))
             }
         }
     }
@@ -157,6 +182,21 @@ private fun ActivityParameters(
 }
 
 @Composable
+fun ActivityImage(
+    imageData: ChooseActivityImage,
+) {
+    val painter = rememberImagePainter(data = imageData.url)
+    Image(
+        painter = painter,
+        contentDescription = stringResource(id = R.string.image),
+        contentScale = ContentScale.Crop,
+    )
+    AttributionText(
+        imageData = imageData,
+    )
+}
+
+@Composable
 @Preview
 fun ChooseActivityContentPreview() {
     ChooseActivityContent(
@@ -167,5 +207,6 @@ fun ChooseActivityContentPreview() {
         onParticipantsSelected = { },
         costs = listOf("Cheap", "Expensive"),
         onCostSelected = { },
+        onDisplayActivity = { },
     )
 }
