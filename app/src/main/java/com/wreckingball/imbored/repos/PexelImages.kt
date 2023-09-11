@@ -1,33 +1,37 @@
 package com.wreckingball.imbored.repos
 
-import com.wreckingball.imbored.models.PexelResponse
+import com.wreckingball.imbored.domain.models.ChooseActivityImage
 import com.wreckingball.imbored.network.ApiResult
 import com.wreckingball.imbored.network.NetworkResponse
 import com.wreckingball.imbored.network.PexelImageService
+import com.wreckingball.imbored.network.models.PexelResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 
 class PexelImages(private val pexelImageService: PexelImageService) {
-    private val imageMap = mutableMapOf<String, String>()
+    private val imageMap = mutableMapOf<String, ChooseActivityImage>()
 
-    suspend fun getImageUrl(query: String) : ApiResult<String> {
-        var result: ApiResult<String>?
-        if (imageMap[query].isNullOrEmpty()) {
-            var response = callPexelApi(query)
-            result = response.mapToResult()
-            if (result.data.isNullOrEmpty()) {
-                response = callPexelApi("cleaning")
-                result = response.mapToResult()
+    suspend fun getImageUrl(query: String) : ApiResult<ChooseActivityImage> {
+        var result: ApiResult<ChooseActivityImage>?
+        if (imageMap[query] == null) {
+            //image has never been loaded
+            result = callPexelApi(query).mapToApiResult()
+            val url = result.data?.url
+            if (url == null) {
+                //no results exist yet for "busywork" -- try again
+                result = callPexelApi("cleaning").mapToApiResult()
             }
-            imageMap[query] = result.data ?: ""
+            //mark this image as loaded... or not
+            imageMap[query] = result.data as ChooseActivityImage
         } else {
-            val url = imageMap[query]
-            result = if (url == null) {
+            //this image has already been loaded -- return the cached image data
+            val imageData = imageMap[query]
+            result = if (imageData == null) {
                 imageMap.remove(query)
                 ApiResult.Error("Unknown error!")
             } else {
-                ApiResult.Success(url)
+                ApiResult.Success(imageData)
             }
         }
         return result
@@ -44,11 +48,11 @@ class PexelImages(private val pexelImageService: PexelImageService) {
     }
 }
 
-private fun NetworkResponse<PexelResponse>.mapToResult(): ApiResult<String> =
+private fun NetworkResponse<PexelResponse>.mapToApiResult(): ApiResult<ChooseActivityImage> =
     when (this) {
         is NetworkResponse.Success -> {
             if (data.photos.isNotEmpty()) {
-                ApiResult.Success(data.photos[0].src.portrait)
+                ApiResult.Success(data.mapToChooseActivityImage())
             } else {
                 ApiResult.Error("Unknown network error!")
             }
@@ -57,6 +61,14 @@ private fun NetworkResponse<PexelResponse>.mapToResult(): ApiResult<String> =
             ApiResult.Error("Error code ${code}: ${exception.localizedMessage}")
         }
     }
+
+private fun PexelResponse.mapToChooseActivityImage(): ChooseActivityImage {
+    return ChooseActivityImage(
+        url = photos[0].src.portrait,
+        photographer = photos[0].photographer,
+        photographerUrl = photos[0].photographerUrl,
+    )
+}
 
 private fun HttpException.toNetworkErrorResponse(): NetworkResponse<Nothing> =
     when (val code = code()) {

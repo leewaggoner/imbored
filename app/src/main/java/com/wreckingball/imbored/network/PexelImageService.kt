@@ -1,6 +1,6 @@
 package com.wreckingball.imbored.network
 
-import com.wreckingball.imbored.models.PexelResponse
+import com.wreckingball.imbored.network.models.PexelResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

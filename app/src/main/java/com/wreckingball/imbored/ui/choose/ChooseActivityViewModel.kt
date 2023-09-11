@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.wreckingball.imbored.domain.models.ChooseActivityImage
 import com.wreckingball.imbored.network.ApiResult
 import com.wreckingball.imbored.repos.PexelImages
 import com.wreckingball.imbored.ui.choose.models.ChooseActivityState
@@ -22,8 +23,8 @@ class ChooseActivityViewModel(
     fun onTabClick(name: String) {
         curTab = name
         viewModelScope.launch(Dispatchers.IO) {
-            val url = getImageUrl(name)
-            state = state.copy(imageUrl = url)
+            val imageData = getImageData(name)
+            state = state.copy(imageData = imageData)
         }
     }
 
@@ -37,15 +38,15 @@ class ChooseActivityViewModel(
         state = state.copy(selectedCost = cost)
     }
 
-    private suspend fun getImageUrl(name: String) : String {
-        var url = ""
+    private suspend fun getImageData(name: String) : ChooseActivityImage? {
+        var imageData: ChooseActivityImage? = null
         when (val result = pexelImages.getImageUrl(name)) {
             is ApiResult.Success -> {
-                url = result.data ?: ""
+                imageData = result.data
             }
             is ApiResult.Error -> {}
             is ApiResult.Loading -> {}
         }
-        return url
+        return imageData
     }
 }

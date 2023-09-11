@@ -1,4 +1,4 @@
-package com.wreckingball.imbored.models
+package com.wreckingball.imbored.network.models
 
 data class PexelImageSource(
     val original: String,

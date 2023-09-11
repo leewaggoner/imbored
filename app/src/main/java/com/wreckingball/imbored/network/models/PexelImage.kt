@@ -1,4 +1,4 @@
-package com.wreckingball.imbored.models
+package com.wreckingball.imbored.network.models
 
 import com.google.gson.annotations.SerializedName
 

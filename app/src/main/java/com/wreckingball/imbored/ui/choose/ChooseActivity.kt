@@ -31,6 +31,7 @@ import com.wreckingball.imbored.R
 import com.wreckingball.imbored.ui.Actions
 import com.wreckingball.imbored.ui.choose.models.ChooseActivityState
 import com.wreckingball.imbored.ui.compose.ActivityParametersDropdown
+import com.wreckingball.imbored.ui.compose.AttributionText
 import com.wreckingball.imbored.ui.theme.White
 import com.wreckingball.imbored.ui.theme.dimensions
 import org.koin.androidx.compose.get
@@ -111,12 +112,17 @@ fun ChooseActivityContent(
                 onCostSelected = onCostSelected,
             )
             Spacer(modifier = Modifier.height(MaterialTheme.dimensions.ChooseActivitySmallSpacer))
-            val painter = rememberImagePainter(data = state.imageUrl)
-            Image(
-                painter = painter,
-                contentDescription = stringResource(id = R.string.image),
-                contentScale = ContentScale.Crop,
-            )
+            state.imageData?.let { imageData ->
+                val painter = rememberImagePainter(data = imageData.url)
+                Image(
+                    painter = painter,
+                    contentDescription = stringResource(id = R.string.image),
+                    contentScale = ContentScale.Crop,
+                )
+                AttributionText(
+                    imageData = state.imageData,
+                )
+            }
         }
     }
 }
