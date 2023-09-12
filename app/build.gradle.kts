@@ -28,10 +28,12 @@ android {
         debug {
             buildConfigField(name = "PEXEL_AUTH_KEY", type = "String", value = "\"$pexelApiKey\"")
             buildConfigField(name = "PEXEL_IMAGE_URL", type = "String", value = "\"https://api.pexels.com/\"")
+            buildConfigField(name = "BORED_API_URL", type = "String", value = "\"http://www.boredapi.com/api/\"")
         }
         release {
             buildConfigField(name = "PEXEL_AUTH_KEY", type = "String", value = "\"$pexelApiKey\"")
             buildConfigField(name = "PEXEL_IMAGE_URL", type = "String", value = "\"https://api.pexels.com/\"")
+            buildConfigField(name = "BORED_API_URL", type = "String", value = "\"http://www.boredapi.com/api/\"")
 
             isMinifyEnabled = false
             proguardFiles(
@@ -73,14 +75,14 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation("androidx.core:core-splashscreen:1.0.1")
     implementation("androidx.navigation:navigation-compose:2.7.1")
-    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.1")
 
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.1")
     implementation("io.insert-koin:koin-android:3.2.0-beta-1")
     implementation("io.insert-koin:koin-androidx-compose:3.2.0-beta-1")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.2.1")
-    implementation("io.coil-kt:coil-compose:1.3.2")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+    implementation("io.coil-kt:coil-compose:2.4.0")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

@@ -1,6 +1,6 @@
 package com.wreckingball.imbored.domain.models
 
-data class ChooseActivityImage(
+data class BoredActivityImage(
     val url: String = "",
     val photographer: String = "",
     val photographerUrl: String = "",

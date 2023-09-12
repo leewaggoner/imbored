@@ -1,6 +1,5 @@
 package com.wreckingball.imbored.ui.choose
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,21 +21,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.annotation.ExperimentalCoilApi
-import coil.compose.rememberImagePainter
 import com.wreckingball.imbored.R
-import com.wreckingball.imbored.domain.models.ChooseActivityImage
 import com.wreckingball.imbored.ui.Actions
 import com.wreckingball.imbored.ui.choose.models.ChooseActivityNavigation
 import com.wreckingball.imbored.ui.choose.models.ChooseActivityState
+import com.wreckingball.imbored.ui.compose.ActivityImage
 import com.wreckingball.imbored.ui.compose.ActivityParametersDropdown
-import com.wreckingball.imbored.ui.compose.AttributionText
 import com.wreckingball.imbored.ui.theme.White
 import com.wreckingball.imbored.ui.theme.dimensions
 import org.koin.androidx.compose.get
@@ -179,21 +175,6 @@ private fun ActivityParameters(
             onItemSelected = onCostSelected
         )
     }
-}
-
-@Composable
-fun ActivityImage(
-    imageData: ChooseActivityImage,
-) {
-    val painter = rememberImagePainter(data = imageData.url)
-    Image(
-        painter = painter,
-        contentDescription = stringResource(id = R.string.image),
-        contentScale = ContentScale.Crop,
-    )
-    AttributionText(
-        imageData = imageData,
-    )
 }
 
 @Composable

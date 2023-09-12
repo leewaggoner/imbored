@@ -13,12 +13,12 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import com.wreckingball.imbored.R
-import com.wreckingball.imbored.domain.models.ChooseActivityImage
+import com.wreckingball.imbored.domain.models.BoredActivityImage
 import com.wreckingball.imbored.ui.theme.dimensions
 
 @Composable
 fun AttributionText(
-    imageData: ChooseActivityImage,
+    imageData: BoredActivityImage,
     modifier: Modifier = Modifier,
 ) {
     val uriHandler = LocalUriHandler.current
@@ -56,7 +56,7 @@ fun AttributionText(
 private fun buildAttributionText(
     photoBy: String,
     on: String,
-    imageData: ChooseActivityImage,
+    imageData: BoredActivityImage,
     ): AnnotatedString =
     buildAnnotatedString {
         append("$photoBy ")

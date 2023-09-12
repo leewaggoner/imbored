@@ -7,4 +7,8 @@
     <string name="photo_by">Photo by</string>
     <string name="on">on</string>
     <string name="go">Go!</string>
+    <string name="why_dont_you">Why don\'t you</string>
+    <string name="try_again">Try again\n\n</string>
+    <string name="ok">Ok</string>
+    <string name="error">Error</string>
 </resources>

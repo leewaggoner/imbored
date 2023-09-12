@@ -1,9 +1,12 @@
 package com.wreckingball.imbored.di
 
 import com.wreckingball.imbored.BuildConfig
+import com.wreckingball.imbored.network.BoredService
 import com.wreckingball.imbored.network.PexelAuthInterceptor
 import com.wreckingball.imbored.network.PexelImageService
+import com.wreckingball.imbored.repos.BoredActivity
 import com.wreckingball.imbored.repos.PexelImages
+import com.wreckingball.imbored.ui.activity.DisplayActivityViewModel
 import com.wreckingball.imbored.ui.choose.ChooseActivityViewModel
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -21,13 +24,26 @@ private const val WRITE_TIMEOUT = 30L
 val appModule = module {
     viewModel {
         ChooseActivityViewModel(
-            pexelImages = get()
+            pexelImages = get(),
+        )
+    }
+
+    viewModel {
+        DisplayActivityViewModel(
+            boredActivity = get(),
+            pexelImages = get(),
         )
     }
 
     single {
         PexelImages(
-            pexelImageService = get()
+            pexelImageService = get(),
+        )
+    }
+
+    single {
+        BoredActivity(
+            boredService = get(),
         )
     }
 
@@ -36,7 +52,17 @@ val appModule = module {
             retrofit = retrofitService(
                 url = BuildConfig.PEXEL_IMAGE_URL,
                 okHttpClient = okHttp(PexelAuthInterceptor()),
-                converterFactory = GsonConverterFactory.create()
+                converterFactory = GsonConverterFactory.create(),
+            )
+        )
+    }
+
+    factory<BoredService> {
+        createService(
+            retrofit = retrofitService(
+                url = BuildConfig.BORED_API_URL,
+                okHttpClient = okHttp(),
+                converterFactory = GsonConverterFactory.create(),
             )
         )
     }

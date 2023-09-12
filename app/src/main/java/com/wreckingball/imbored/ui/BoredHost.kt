@@ -24,7 +24,6 @@ fun BoredHost() {
             val boredUrl = backStackEntry.arguments?.getString("boredUrl")
             boredUrl?.let { url ->
                 DisplayActivity(
-                    actions = actions,
                     boredUrl = url,
                 )
             }

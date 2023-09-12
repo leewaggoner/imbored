@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.wreckingball.imbored.domain.models.ChooseActivityImage
+import com.wreckingball.imbored.domain.models.BoredActivityImage
 import com.wreckingball.imbored.network.ApiResult
 import com.wreckingball.imbored.repos.PexelImages
 import com.wreckingball.imbored.ui.choose.models.ChooseActivityNavigation
@@ -46,7 +46,7 @@ class ChooseActivityViewModel(
     }
 
     fun onDisplayActivity() {
-        var url = "http://www.boredapi.com/api/activity?type=${curTab.lowercase()}"
+        var url = "https://www.boredapi.com/api/activity?type=${curTab.lowercase()}"
         if (curParticipants.isNotEmpty()) {
             url += getParticipantsParam()
         }
@@ -58,8 +58,8 @@ class ChooseActivityViewModel(
         }
     }
 
-    private suspend fun getImageData(name: String) : ChooseActivityImage? {
-        var imageData: ChooseActivityImage? = null
+    private suspend fun getImageData(name: String): BoredActivityImage? {
+        var imageData: BoredActivityImage? = null
         when (val result = pexelImages.getImageUrl(name)) {
             is ApiResult.Success -> {
                 imageData = result.data

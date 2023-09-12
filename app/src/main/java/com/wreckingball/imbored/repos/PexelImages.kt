@@ -1,19 +1,20 @@
 package com.wreckingball.imbored.repos
 
-import com.wreckingball.imbored.domain.models.ChooseActivityImage
+import com.wreckingball.imbored.domain.models.BoredActivityImage
 import com.wreckingball.imbored.network.ApiResult
 import com.wreckingball.imbored.network.NetworkResponse
 import com.wreckingball.imbored.network.PexelImageService
 import com.wreckingball.imbored.network.models.PexelResponse
+import com.wreckingball.imbored.network.toNetworkErrorResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 
 class PexelImages(private val pexelImageService: PexelImageService) {
-    private val imageMap = mutableMapOf<String, ChooseActivityImage>()
+    private val imageMap = mutableMapOf<String, BoredActivityImage>()
 
-    suspend fun getImageUrl(query: String) : ApiResult<ChooseActivityImage> {
-        var result: ApiResult<ChooseActivityImage>?
+    suspend fun getImageUrl(query: String) : ApiResult<BoredActivityImage> {
+        var result: ApiResult<BoredActivityImage>?
         if (imageMap[query] == null) {
             //image has never been loaded
             result = callPexelApi(query).mapToApiResult()
@@ -23,7 +24,7 @@ class PexelImages(private val pexelImageService: PexelImageService) {
                 result = callPexelApi("cleaning").mapToApiResult()
             }
             //mark this image as loaded... or not
-            imageMap[query] = result.data as ChooseActivityImage
+            imageMap[query] = result.data as BoredActivityImage
         } else {
             //this image has already been loaded -- return the cached image data
             val imageData = imageMap[query]
@@ -48,7 +49,7 @@ class PexelImages(private val pexelImageService: PexelImageService) {
     }
 }
 
-private fun NetworkResponse<PexelResponse>.mapToApiResult(): ApiResult<ChooseActivityImage> =
+private fun NetworkResponse<PexelResponse>.mapToApiResult(): ApiResult<BoredActivityImage> =
     when (this) {
         is NetworkResponse.Success -> {
             if (data.photos.isNotEmpty()) {
@@ -62,22 +63,10 @@ private fun NetworkResponse<PexelResponse>.mapToApiResult(): ApiResult<ChooseAct
         }
     }
 
-private fun PexelResponse.mapToChooseActivityImage(): ChooseActivityImage {
-    return ChooseActivityImage(
+private fun PexelResponse.mapToChooseActivityImage(): BoredActivityImage {
+    return BoredActivityImage(
         url = photos[0].src.portrait,
         photographer = photos[0].photographer,
         photographerUrl = photos[0].photographerUrl,
     )
 }
-
-private fun HttpException.toNetworkErrorResponse(): NetworkResponse<Nothing> =
-    when (val code = code()) {
-        400 -> NetworkResponse.Error.BadRequest(this, code)
-        401,
-        403 -> NetworkResponse.Error.Unauthorized(this, code)
-        404 -> NetworkResponse.Error.NotFound(this, code)
-        429 -> NetworkResponse.Error.TooManyRequests(this, code)
-        in 400..499 -> NetworkResponse.Error.ApiError(this, code)
-        in 500..599 -> NetworkResponse.Error.ServerError(this, code)
-        else -> NetworkResponse.Error.UnknownNetworkError(this, code)
-    }

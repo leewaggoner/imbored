@@ -11,5 +11,7 @@ data class Dimensions(
     val ChooseActivitySmallSpacer: Dp = 8.dp,
     val APDropdownWidth: Dp = 174.dp,
 
+    val DisplayActivityMargin: Dp = 16.dp,
+
     val AttributionTextSize: TextUnit = 8.sp,
 )
