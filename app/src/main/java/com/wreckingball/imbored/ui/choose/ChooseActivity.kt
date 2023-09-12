@@ -33,6 +33,7 @@ import com.wreckingball.imbored.ui.choose.models.ChooseActivityNavigation
 import com.wreckingball.imbored.ui.choose.models.ChooseActivityState
 import com.wreckingball.imbored.ui.compose.ActivityImage
 import com.wreckingball.imbored.ui.compose.ActivityParametersDropdown
+import com.wreckingball.imbored.ui.compose.BoredErrorAlert
 import com.wreckingball.imbored.ui.theme.White
 import com.wreckingball.imbored.ui.theme.dimensions
 import org.koin.androidx.compose.get
@@ -68,7 +69,8 @@ fun ChooseActivity(
         onParticipantsSelected = viewModel::onParticipantsSelected,
         costs = costs,
         onCostSelected = viewModel::onCostSelected,
-        onDisplayActivity = viewModel::onDisplayActivity
+        onDisplayActivity = viewModel::onDisplayActivity,
+        onDismissAlert = viewModel::onDismissAlert
     )
 }
 
@@ -83,6 +85,7 @@ fun ChooseActivityContent(
     costs: List<String>,
     onCostSelected: (String) -> Unit,
     onDisplayActivity: () -> Unit,
+    onDismissAlert: () -> Unit,
     ) {
     Column(
         modifier = Modifier
@@ -145,6 +148,13 @@ fun ChooseActivityContent(
                 Text(text = stringResource(id = R.string.go))
             }
         }
+
+        if (state.errorMessage.isNotEmpty()) {
+            BoredErrorAlert(
+                message = state.errorMessage,
+                onDismissAlert = onDismissAlert
+            )
+        }
     }
 }
 
@@ -189,5 +199,6 @@ fun ChooseActivityContentPreview() {
         costs = listOf("Cheap", "Expensive"),
         onCostSelected = { },
         onDisplayActivity = { },
+        onDismissAlert = { },
     )
 }

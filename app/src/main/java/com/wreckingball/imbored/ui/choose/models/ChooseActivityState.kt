@@ -6,4 +6,5 @@ data class ChooseActivityState(
     val selectedParticipants: String = "",
     val selectedCost: String = "",
     val imageData: BoredActivityImage? = null,
+    val errorMessage: String = "",
 )

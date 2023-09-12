@@ -54,7 +54,7 @@ class DisplayActivityViewModel(
                 imageData = result.data
             }
             is ApiResult.Error -> {
-                state = state.copy(errorMessage = "Pexel - ${result.message}")
+                state = state.copy(errorMessage = "Pexels - ${result.message}")
             }
             is ApiResult.Loading -> { }
         }

@@ -58,14 +58,20 @@ class ChooseActivityViewModel(
         }
     }
 
+    fun onDismissAlert() {
+        state = state.copy(errorMessage = "")
+    }
+
     private suspend fun getImageData(name: String): BoredActivityImage? {
         var imageData: BoredActivityImage? = null
         when (val result = pexelImages.getImageUrl(name)) {
             is ApiResult.Success -> {
                 imageData = result.data
             }
-            is ApiResult.Error -> {}
-            is ApiResult.Loading -> {}
+            is ApiResult.Error -> {
+                state = state.copy(errorMessage = "Pexels - ${result.message}")
+            }
+            is ApiResult.Loading -> { }
         }
         return imageData
     }

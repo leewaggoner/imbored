@@ -23,8 +23,10 @@ class PexelImages(private val pexelImageService: PexelImageService) {
                 //no results exist yet for "busywork" -- try again
                 result = callPexelApi("cleaning").mapToApiResult()
             }
-            //mark this image as loaded... or not
-            imageMap[query] = result.data as BoredActivityImage
+            if (result is ApiResult.Success) {
+                //mark this image as loaded... or not
+                imageMap[query] = result.data as BoredActivityImage
+            }
         } else {
             //this image has already been loaded -- return the cached image data
             val imageData = imageMap[query]

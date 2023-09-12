@@ -14,4 +14,6 @@ data class Dimensions(
     val DisplayActivityMargin: Dp = 16.dp,
 
     val AttributionTextSize: TextUnit = 8.sp,
+    val DisplayActivityTitleSize: TextUnit = 42.sp,
+    val DisplayActivityBodySize: TextUnit = 28.sp,
 )
