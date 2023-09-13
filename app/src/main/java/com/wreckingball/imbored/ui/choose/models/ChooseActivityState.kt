@@ -7,4 +7,5 @@ data class ChooseActivityState(
     val selectedCost: String = "",
     val imageData: BoredActivityImage? = null,
     val errorMessage: String = "",
+    val selectedTabIndex: Int = 0,
 )

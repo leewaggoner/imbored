@@ -19,12 +19,12 @@ import com.wreckingball.imbored.ui.activity.models.DisplayActivityState
 import com.wreckingball.imbored.ui.compose.ActivityImage
 import com.wreckingball.imbored.ui.compose.BoredErrorAlert
 import com.wreckingball.imbored.ui.theme.dimensions
-import org.koin.androidx.compose.get
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun DisplayActivity(
     boredUrl: String,
-    viewModel: DisplayActivityViewModel = get(),
+    viewModel: DisplayActivityViewModel = koinViewModel(),
 ) {
     val tryAgain = stringResource(id = R.string.try_again)
     LaunchedEffect(Unit) {

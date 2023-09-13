@@ -24,6 +24,7 @@ private const val WRITE_TIMEOUT = 30L
 val appModule = module {
     viewModel {
         ChooseActivityViewModel(
+            handle = get(),
             pexelImages = get(),
         )
     }

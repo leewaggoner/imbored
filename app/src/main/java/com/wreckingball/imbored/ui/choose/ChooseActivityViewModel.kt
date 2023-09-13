@@ -1,10 +1,11 @@
 package com.wreckingball.imbored.ui.choose
 
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
+import androidx.lifecycle.viewmodel.compose.saveable
 import com.wreckingball.imbored.domain.models.BoredActivityImage
 import com.wreckingball.imbored.network.ApiResult
 import com.wreckingball.imbored.repos.PexelImages
@@ -16,18 +17,23 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 
 class ChooseActivityViewModel(
+    handle: SavedStateHandle,
     private val pexelImages: PexelImages,
     ) : ViewModel() {
     val navigation = MutableSharedFlow<ChooseActivityNavigation>(
         extraBufferCapacity = 1,
         onBufferOverflow = BufferOverflow.DROP_LATEST,
     )
-    var state by mutableStateOf(ChooseActivityState())
+    @OptIn(SavedStateHandleSaveableApi::class)
+    var state by handle.saveable {
+        mutableStateOf(ChooseActivityState())
+    }
     private var curTab = ""
     private var curParticipants = ""
     private var curCost = ""
 
-    fun onTabClick(name: String) {
+    fun onTabClick(tabIndex: Int, name: String) {
+        state = state.copy(selectedTabIndex = tabIndex)
         curTab = name
         viewModelScope.launch(Dispatchers.IO) {
             val imageData = getImageData(name)
