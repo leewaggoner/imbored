@@ -41,14 +41,14 @@ class ChooseActivityViewModel(
         }
     }
 
-    fun onParticipantsSelected(participants: String) {
+    fun onParticipantsSelected(index: Int, participants: String) {
         curParticipants = participants
-        state = state.copy(selectedParticipants = participants)
+        state = state.copy(selectedParticipantsIndex = index)
     }
 
-    fun onCostSelected(cost: String) {
+    fun onCostSelected(index: Int, cost: String) {
         curCost = cost
-        state = state.copy(selectedCost = cost)
+        state = state.copy(selectedCostIndex = index)
     }
 
     fun onDisplayActivity() {

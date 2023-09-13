@@ -24,7 +24,7 @@ fun ActivityParametersDropdown(
     label: String,
     selectedItem: String,
     menuItems: List<String>,
-    onItemSelected: (String) -> Unit,
+    onItemSelected: (Int, String) -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
     ExposedDropdownMenuBox(
@@ -56,12 +56,12 @@ fun ActivityParametersDropdown(
             expanded = expanded,
             onDismissRequest = { expanded = false }
         ) {
-            menuItems.forEach {item ->
+            menuItems.forEachIndexed {index, item ->
                 DropdownMenuItem(
                     text = { Text(item) },
                     onClick = {
                         expanded = false
-                        onItemSelected(item)
+                        onItemSelected(index, item)
                     }
                 )
             }
@@ -76,6 +76,6 @@ fun ActivityParametersDropdownPreview() {
         label = "Items",
         selectedItem = "",
         menuItems = listOf("One", "Two", "Three"),
-        onItemSelected = { }
+        onItemSelected = { _, _ -> }
     )
 }

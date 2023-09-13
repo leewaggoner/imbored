@@ -80,9 +80,9 @@ fun ChooseActivityContent(
     tabs: List<String>,
     onTabClick: (Int, String) -> Unit,
     participants: List<String>,
-    onParticipantsSelected: (String) -> Unit,
+    onParticipantsSelected: (Int, String) -> Unit,
     costs: List<String>,
-    onCostSelected: (String) -> Unit,
+    onCostSelected: (Int, String) -> Unit,
     onDisplayActivity: () -> Unit,
     onDismissAlert: () -> Unit,
     ) {
@@ -159,9 +159,9 @@ fun ChooseActivityContent(
 private fun ActivityParameters(
     state: ChooseActivityState,
     participants: List<String>,
-    onParticipantsSelected: (String) -> Unit,
+    onParticipantsSelected: (Int, String) -> Unit,
     costs: List<String>,
-    onCostSelected: (String) -> Unit,
+    onCostSelected: (Int, String) -> Unit,
 ) {
     Row(
         modifier = Modifier
@@ -170,14 +170,14 @@ private fun ActivityParameters(
     ) {
         ActivityParametersDropdown(
             label = stringResource(id = R.string.participants),
-            selectedItem = state.selectedParticipants,
+            selectedItem = participants[state.selectedParticipantsIndex],
             menuItems = participants,
             onItemSelected = onParticipantsSelected
         )
 
         ActivityParametersDropdown(
             label = stringResource(id = R.string.cost),
-            selectedItem = state.selectedCost,
+            selectedItem = costs[state.selectedCostIndex],
             menuItems = costs,
             onItemSelected = onCostSelected
         )
@@ -192,9 +192,9 @@ fun ChooseActivityContentPreview() {
         participants = listOf("One", "Two", "Three"),
         tabs = listOf("tab1", "tab2", "tab3"),
         onTabClick = { _, _ -> },
-        onParticipantsSelected = { },
+        onParticipantsSelected = { _, _ -> },
         costs = listOf("Cheap", "Expensive"),
-        onCostSelected = { },
+        onCostSelected = { _, _ -> },
         onDisplayActivity = { },
         onDismissAlert = { },
     )
