@@ -22,7 +22,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import coil.annotation.ExperimentalCoilApi
 import com.wreckingball.imbored.R
 import com.wreckingball.imbored.ui.Actions
 import com.wreckingball.imbored.ui.choose.models.ChooseActivityNavigation
