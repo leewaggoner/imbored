@@ -184,7 +184,7 @@ private fun ActivityParameters(
 }
 
 @Composable
-@Preview
+@Preview(name = "ChooseActivityContent Preview")
 fun ChooseActivityContentPreview() {
     ChooseActivityContent(
         state = ChooseActivityState(),
