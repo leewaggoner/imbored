@@ -85,7 +85,6 @@ class ChooseActivityViewModel(
     private fun getParticipantsParam(): String =
         when (curParticipants) {
             "Any" -> ""
-            "More" -> "&participants=5"
             else -> "&participants=$curParticipants"
         }
 
